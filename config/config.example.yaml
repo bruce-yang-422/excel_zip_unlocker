@@ -1,0 +1,100 @@
+# Excel ZIP Unlocker - 設定檔範例
+# 版本: 1.0
+# 說明: 複製此檔案為 config/config.yaml 並填入實際密碼
+
+# ===========================================
+# 日誌管理策略
+# ===========================================
+log_policy:
+  keep_days: 7          # 日誌最多保留 7 天
+  keep_files: 20        # 或最多保留 20 個檔案
+  clean_on_start: true # 啟動時清理舊日誌
+  clean_on_exit: false # 結束時清理舊日誌
+  log_level: "INFO"     # 日誌等級: DEBUG, INFO, WARNING, ERROR
+
+# ===========================================
+# 密碼清單 - 程式會依序嘗試這些密碼
+# 注意: 請填入實際的密碼，不要使用範例密碼
+# ===========================================
+passwords:
+  - "請填入實際密碼1"
+  - "請填入實際密碼2"
+  - "請填入實際密碼3"
+  # 可以添加更多密碼
+  # - "密碼4"
+  # - "密碼5"
+
+# ===========================================
+# 檔案處理設定
+# ===========================================
+file_settings:
+  # 支援的檔案類型
+  supported_extensions:
+    excel: [".xlsx", ".xls", ".xlsm", ".xlsb"]
+    zip: [".zip"]
+    rar: [".rar"]
+  
+  # 檔案大小限制 (MB)
+  max_file_size: 500
+  
+  # 處理超時時間 (秒)
+  timeout: 300
+  
+  # 是否保留原始檔案結構
+  preserve_structure: true
+  
+  # 輸出檔案命名規則
+  output_naming:
+    prefix: "unlocked_"
+    suffix: ""
+    add_timestamp: false
+
+# ===========================================
+# 外部工具路徑
+# ===========================================
+external_tools:
+  # RAR 解壓工具路徑 (Windows)
+  unrar_path: "tools/unrar.exe"
+  # 7-Zip 工具路徑 (備用)
+  sevenzip_path: "tools/7z.exe"
+
+# ===========================================
+# GUI 設定
+# ===========================================
+gui_settings:
+  window_title: "Excel ZIP Unlocker"
+  window_size: "800x600"
+  theme: "default"  # default, dark, light
+  
+# ===========================================
+# 報表設定
+# ===========================================
+report_settings:
+  format: "yaml"  # yaml, json, csv
+  include_details: true
+  include_statistics: true
+  auto_open: false
+
+# ===========================================
+# 進階設定
+# ===========================================
+advanced:
+  # 並行處理檔案數量
+  max_workers: 4
+  
+  # 重試次數
+  max_retries: 3
+  
+  # 是否顯示詳細進度
+  verbose: true
+  
+  # 是否在處理完成後自動開啟輸出資料夾
+  auto_open_output: false
+
+# ===========================================
+# 安全提醒
+# ===========================================
+# 1. 請勿將包含真實密碼的設定檔提交到版本控制
+# 2. 定期更新密碼
+# 3. 使用強密碼
+# 4. 考慮使用環境變數來管理敏感資訊
