@@ -351,10 +351,6 @@ tmp/
 # 專案特定
 # ===========================================
 
-# 專案樹狀圖檔案 (自動生成)
-project_structure.txt
-project_structure_utf8.txt
-
 # 測試結果
 test_results/
 test_output/

@@ -19,23 +19,24 @@
 excel_zip_unlocker/
 ├── 📄 main.py                    # 主程式 (命令行版本)
 ├── 🖥️ gui.py                     # GUI 介面
-├── 📄 build.py                   # 打包腳本
 ├── 📄 run.ps1                    # PowerShell 執行腳本
 ├── 📄 run.bat                    # 批次執行腳本
-├── 📄 setup_git.py               # Git 初始化腳本 (Python)
 ├── 📄 setup_git.ps1              # Git 初始化腳本 (PowerShell)
 ├── 📋 requirements.txt           # Python 依賴套件
 ├── 📄 .gitignore                 # Git 忽略規則
 ├── 📄 .gitattributes             # Git 檔案屬性
 ├── 📄 env.example                # 環境變數範例
-├── 📁 src/                       # 核心模組
+├── 📁 src/                       # 核心模組和腳本
 │   ├── 📄 logger_manager.py     # 日誌管理系統
 │   ├── 📄 file_processor.py      # 檔案處理核心
-│   └── 📄 report_generator.py   # 報表生成系統
-├── 📁 input/                     # 待處理檔案 (Excel / ZIP / RAR)
-├── 📁 output/                    # 解密後檔案
+│   ├── 📄 report_generator.py   # 報表生成系統
+│   ├── 📄 build.py              # 打包腳本
+│   ├── 📄 check_git_security.py # Git 安全檢查腳本
+│   └── 📄 setup_git.py          # Git 初始化腳本 (Python)
+├── 📁 input/                     # 待處理檔案
+├── 📁 output/                    # 處理結果
 ├── 📁 logs/                      # 執行日誌 (自動產生)
-├── 📁 report/                    # 執行結果報表
+├── 📁 report/                    # 處理報表
 ├── 📁 config/                    # 設定檔
 │   ├── 📄 config.yaml           # 主設定檔 (包含密碼)
 │   └── 📄 config.example.yaml   # 設定檔範例
@@ -56,11 +57,11 @@ excel_zip_unlocker/
 
 #### 使用自動化腳本 (推薦)
 ```bash
-# Python 版本
-python setup_git.py
-
 # PowerShell 版本
 .\setup_git.ps1
+
+# Python 版本 (在 src 資料夾中)
+python src/setup_git.py
 
 # 設定遠端倉庫
 .\setup_git.ps1 -RemoteUrl "https://github.com/your-username/excel_zip_unlocker.git"
@@ -298,7 +299,7 @@ passwords:
 ### 使用打包腳本
 
 ```bash
-python build.py
+python src/build.py
 ```
 
 打包完成後，可執行檔案會位於 `dist/` 目錄中：

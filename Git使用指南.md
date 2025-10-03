@@ -13,7 +13,7 @@
 
 ```bash
 # 使用 Python 腳本
-python setup_git.py
+python src/setup_git.py
 
 # 使用 PowerShell 腳本
 .\setup_git.ps1
@@ -142,7 +142,7 @@ git commit -m "refactor: 重構檔案處理邏輯"
 
 ```bash
 # 執行安全檢查
-python check_git_security.py
+python src/check_git_security.py
 ```
 
 ### 手動檢查項目
