@@ -10,7 +10,7 @@
 - **多組密碼管理**：支援 config.yaml 中設定多組密碼，逐一嘗試解鎖
 - **完整日誌記錄**：所有執行細節輸出到 logs/，具備保留策略
 - **詳細報表**：每次執行產生處理結果摘要報表
-- **雙重介面**：提供命令行和 GUI 兩種操作方式
+- **雙重介面**：提供命令行介面
 - **跨平臺支援**：主要支援 Windows，可打包成 EXE 檔案
 
 ## 📁 專案結構
@@ -18,7 +18,6 @@
 ```
 excel_zip_unlocker/
 ├── 📄 main.py                    # 主程式 (命令行版本)
-├── 🖥️ gui.py                     # GUI 介面
 ├── 📄 run.ps1                    # PowerShell 執行腳本
 ├── 📄 setup_git.ps1              # Git 初始化腳本 (PowerShell)
 ├── 📋 requirements.txt           # Python 依賴套件
@@ -105,9 +104,6 @@ run.ps1
 ```bash
 # 命令行版本
 python main.py
-
-# GUI 版本
-python gui.py
 
 # 指定參數
 python main.py -i custom_input -o custom_output -c custom_config.yaml
@@ -230,12 +226,12 @@ python main.py --check-deps
 python main.py -v
 ```
 
-### GUI 版本
+### 命令行版本
 
-1. 執行 `python gui.py` 或使用 `run.bat` 選擇 GUI 模式
-2. 選擇輸入和輸出資料夾
-3. 設定密碼清單
-4. 點擊「開始處理」
+1. 執行 `python main.py` 或使用 `run.ps1`
+2. 程式會自動處理 `input/` 資料夾中的檔案
+3. 處理結果會輸出到 `output/` 資料夾
+4. 查看 `logs/` 和 `report/` 資料夾了解處理詳情
 5. 查看處理進度和結果
 
 ## 🔧 支援的檔案類型
@@ -303,8 +299,6 @@ python src/build.py
 
 打包完成後，可執行檔案會位於 `dist/` 目錄中：
 - `excel_zip_unlocker.exe` - 命令行版本
-- `excel_zip_unlocker_gui.exe` - GUI 版本
-- `run_gui.ps1` - 執行 GUI 版本
 
 ### 手動打包
 
@@ -314,9 +308,6 @@ pip install pyinstaller
 
 # 打包命令行版本
 pyinstaller --onefile --console main.py
-
-# 打包 GUI 版本
-pyinstaller --onefile --windowed gui.py
 ```
 
 ## 🔍 故障排除

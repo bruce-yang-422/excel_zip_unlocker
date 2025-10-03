@@ -3,7 +3,6 @@
 # 版本: 1.0 (2025-10-03)
 
 param(
-    [switch]$GUI,
     [switch]$Help,
     [string]$Input = "input",
     [string]$Output = "output",
@@ -16,11 +15,9 @@ if ($Help) {
     Write-Host ""
     Write-Host "使用方式:" -ForegroundColor Yellow
     Write-Host "  .\run.ps1                    # 執行命令行版本"
-    Write-Host "  .\run.ps1 -GUI              # 執行 GUI 版本"
     Write-Host "  .\run.ps1 -Input custom_input -Output custom_output"
     Write-Host ""
     Write-Host "參數說明:" -ForegroundColor Yellow
-    Write-Host "  -GUI     啟動圖形化介面"
     Write-Host "  -Input   指定輸入資料夾 (預設: input)"
     Write-Host "  -Output  指定輸出資料夾 (預設: output)"
     Write-Host "  -Config  指定設定檔路徑 (預設: config/config.yaml)"
@@ -74,48 +71,8 @@ Write-Host "輸出資料夾: $Output" -ForegroundColor Cyan
 Write-Host "設定檔: $Config" -ForegroundColor Cyan
 Write-Host ""
 
-# 如果沒有指定 GUI 參數，顯示選單
-if (!$GUI) {
-    Write-Host "請選擇執行模式:" -ForegroundColor Yellow
-    Write-Host "1. 命令行版本" -ForegroundColor White
-    Write-Host "2. GUI 版本" -ForegroundColor White
-    Write-Host "3. 檢查依賴套件" -ForegroundColor White
-    Write-Host "4. 退出" -ForegroundColor White
-    Write-Host ""
-    
-    do {
-        $choice = Read-Host "請輸入選項 (1-4)"
-        switch ($choice) {
-            "1" {
-                Write-Host "啟動命令行版本..." -ForegroundColor Yellow
-                python main.py -i $Input -o $Output -c $Config
-                break
-            }
-            "2" {
-                Write-Host "啟動 GUI 版本..." -ForegroundColor Yellow
-                python gui.py
-                break
-            }
-            "3" {
-                Write-Host "檢查依賴套件..." -ForegroundColor Yellow
-                python main.py --check-deps
-                Write-Host ""
-                continue
-            }
-            "4" {
-                Write-Host "退出程式" -ForegroundColor Yellow
-                exit 0
-            }
-            default {
-                Write-Host "無效選項，請重新選擇" -ForegroundColor Red
-                continue
-            }
-        }
-    } while ($choice -notin @("1", "2", "3", "4"))
-} else {
-    Write-Host "啟動 GUI 版本..." -ForegroundColor Yellow
-    python gui.py
-}
+Write-Host "啟動命令行版本..." -ForegroundColor Yellow
+python main.py -i $Input -o $Output -c $Config
 
 Write-Host ""
 Write-Host "程式執行完成" -ForegroundColor Green

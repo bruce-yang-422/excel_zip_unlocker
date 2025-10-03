@@ -47,11 +47,6 @@ a = Analysis(
         'rarfile',
         'tqdm',
         'yaml',
-        'tkinter',
-        'tkinter.ttk',
-        'tkinter.filedialog',
-        'tkinter.messagebox',
-        'tkinter.scrolledtext',
     ],
     hookspath=[],
     hooksconfig={},
@@ -88,29 +83,6 @@ exe = EXE(
     icon=None,
 )
 
-# GUI 版本
-exe_gui = EXE(
-    pyz,
-    a.scripts,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    [],
-    name='excel_zip_unlocker_gui',
-    debug=False,
-    bootloader_ignore_signals=False,
-    strip=False,
-    upx=True,
-    upx_exclude=[],
-    runtime_tmpdir=None,
-    console=False,
-    disable_windowed_traceback=False,
-    argv_emulation=False,
-    target_arch=None,
-    codesign_identity=None,
-    entitlements_file=None,
-    icon=None,
-)
 '''
     
     with open('excel_zip_unlocker.spec', 'w', encoding='utf-8') as f:
@@ -175,22 +147,22 @@ def create_powershell_files():
     if not dist_dir.exists():
         return
     
-    # 建立 GUI 版本 PowerShell 腳本
-    gui_ps1 = '''# Excel ZIP Unlocker - GUI 版本
-Write-Host "Excel ZIP Unlocker - GUI 版本" -ForegroundColor Green
+    # 建立命令行版本 PowerShell 腳本
+    cmd_ps1 = '''# Excel ZIP Unlocker - 命令行版本
+Write-Host "Excel ZIP Unlocker - 命令行版本" -ForegroundColor Green
 Write-Host "=================================" -ForegroundColor Green
 Write-Host ""
 
 try {
-    .\\excel_zip_unlocker_gui.exe
+    .\\excel_zip_unlocker.exe
 } catch {
-    Write-Host "執行 GUI 版本時發生錯誤: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "執行命令行版本時發生錯誤: $($_.Exception.Message)" -ForegroundColor Red
     Read-Host "按 Enter 鍵退出"
 }
 '''
     
-    with open(dist_dir / 'run_gui.ps1', 'w', encoding='utf-8') as f:
-        f.write(gui_ps1)
+    with open(dist_dir / 'run.ps1', 'w', encoding='utf-8') as f:
+        f.write(cmd_ps1)
     
     print("✓ 已建立 PowerShell 執行檔案")
 
@@ -221,8 +193,7 @@ def main():
     print("打包完成！")
     print("可執行檔案位於 dist/ 目錄中")
     print("- excel_zip_unlocker.exe (命令行版本)")
-    print("- excel_zip_unlocker_gui.exe (GUI 版本)")
-    print("- run_gui.ps1 (執行 GUI 版本)")
+    print("- run.ps1 (執行腳本)")
 
 
 if __name__ == "__main__":
