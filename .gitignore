@@ -8,7 +8,6 @@
 
 # 包含密碼的設定檔
 config/config.yaml
-config/*.yaml
 config/*.yml
 config/*.json
 config/*.ini
