@@ -384,3 +384,4 @@ python main.py --check-deps
 ---
 
 **Excel ZIP Unlocker** - 讓檔案解密變得簡單高效！ 🚀
+# excel_zip_unlocker
