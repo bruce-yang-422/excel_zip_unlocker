@@ -8,9 +8,13 @@
 - **自動移除 Excel 密碼**：透過 msoffcrypto-tool 解密受保護的 Excel 檔案
 - **批次處理**：自動處理 input/ 資料夾內的所有檔案
 - **多組密碼管理**：支援 config.yaml 中設定多組密碼，逐一嘗試解鎖
+- **三種處理模式**：
+  - 自動檢測：處理所有支援的檔案類型
+  - 批次密碼解壓縮：只處理 ZIP/RAR 檔案
+  - 批次密碼移除 Excel：只處理 Excel 檔案
 - **完整日誌記錄**：所有執行細節輸出到 logs/，具備保留策略
 - **詳細報表**：每次執行產生處理結果摘要報表
-- **雙重介面**：提供命令行介面
+- **互動式選單**：提供友善的命令行介面
 - **跨平臺支援**：主要支援 Windows，可打包成 EXE 檔案
 
 ## 📁 專案結構
@@ -213,6 +217,11 @@ report_settings:
 # 基本使用
 python main.py
 
+# 指定處理模式
+python main.py -m extract    # 只處理壓縮檔案
+python main.py -m excel      # 只處理 Excel 檔案
+python main.py -m auto       # 自動檢測 (預設)
+
 # 指定輸入輸出資料夾
 python main.py -i my_input -o my_output
 
@@ -226,13 +235,23 @@ python main.py --check-deps
 python main.py -v
 ```
 
-### 命令行版本
+### 互動式選單
+
+使用 `run.ps1` 腳本會提供友善的互動式選單：
+
+1. **自動檢測** - 處理所有支援的檔案類型
+2. **批次密碼解壓縮** - 只處理 ZIP/RAR 檔案
+3. **批次密碼移除 Excel** - 只處理 Excel 檔案
+4. **檢查依賴套件** - 驗證環境設定
+5. **退出** - 結束程式
+
+### 處理流程
 
 1. 執行 `python main.py` 或使用 `run.ps1`
-2. 程式會自動處理 `input/` 資料夾中的檔案
-3. 處理結果會輸出到 `output/` 資料夾
-4. 查看 `logs/` 和 `report/` 資料夾了解處理詳情
-5. 查看處理進度和結果
+2. 選擇處理模式
+3. 程式會自動處理 `input/` 資料夾中的檔案
+4. 處理結果會輸出到 `output/` 資料夾
+5. 查看 `logs/` 和 `report/` 資料夾了解處理詳情
 
 ## 🔧 支援的檔案類型
 

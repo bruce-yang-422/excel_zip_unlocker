@@ -98,22 +98,23 @@ def main():
   python main.py -i custom_input    # 指定輸入資料夾
   python main.py -o custom_output   # 指定輸出資料夾
   python main.py -c custom_config.yaml  # 使用自訂設定檔
-  python main.py --gui              # 啟動 GUI 介面
+  python main.py -m extract            # 只處理壓縮檔案
+  python main.py -m excel              # 只處理 Excel 檔案
         """
     )
     
     parser.add_argument('-i', '--input', default='input',
-                       help='輸入資料夾路徑 (預設: input)')
+                        help='輸入資料夾路徑 (預設: input)')
     parser.add_argument('-o', '--output', default='output',
-                       help='輸出資料夾路徑 (預設: output)')
+                        help='輸出資料夾路徑 (預設: output)')
     parser.add_argument('-c', '--config', default='config/config.yaml',
-                       help='設定檔路徑 (預設: config/config.yaml)')
-    parser.add_argument('--gui', action='store_true',
-                       help='啟動 GUI 介面')
+                        help='設定檔路徑 (預設: config/config.yaml)')
+    parser.add_argument('-m', '--mode', choices=['auto', 'extract', 'excel'], default='auto',
+                        help='處理模式: auto=自動檢測, extract=只解壓縮, excel=只處理Excel (預設: auto)')
     parser.add_argument('--check-deps', action='store_true',
-                       help='檢查依賴套件')
+                        help='檢查依賴套件')
     parser.add_argument('-v', '--verbose', action='store_true',
-                       help='顯示詳細輸出')
+                        help='顯示詳細輸出')
     
     args = parser.parse_args()
     
@@ -160,6 +161,7 @@ def main():
         logger.info(f"輸入資料夾: {input_path.absolute()}")
         logger.info(f"輸出資料夾: {output_path.absolute()}")
         logger.info(f"設定檔: {args.config}")
+        logger.info(f"處理模式: {args.mode}")
         logger.info(f"密碼數量: {len(config.get('passwords', []))}")
         
         # 記錄開始時間
@@ -168,8 +170,16 @@ def main():
         # 建立檔案處理器
         processor = FileProcessor(config, logger)
         
-        # 處理檔案
-        results = processor.process_files(str(input_path), str(output_path))
+        # 根據模式處理檔案
+        if args.mode == 'extract':
+            logger.info("模式: 只處理壓縮檔案 (ZIP/RAR)")
+            results = processor.process_archive_files(str(input_path), str(output_path))
+        elif args.mode == 'excel':
+            logger.info("模式: 只處理 Excel 檔案")
+            results = processor.process_excel_files(str(input_path), str(output_path))
+        else:  # auto
+            logger.info("模式: 自動檢測檔案類型")
+            results = processor.process_files(str(input_path), str(output_path))
         
         # 記錄結束時間
         end_time = datetime.now()

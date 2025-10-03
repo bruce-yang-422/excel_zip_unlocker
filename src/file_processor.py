@@ -107,6 +107,132 @@ class FileProcessor:
         
         return results
     
+    def process_archive_files(self, input_dir: str, output_dir: str) -> Dict[str, Any]:
+        """
+        只處理壓縮檔案 (ZIP/RAR)
+        
+        Args:
+            input_dir: 輸入資料夾路徑
+            output_dir: 輸出資料夾路徑
+            
+        Returns:
+            Dict: 處理結果統計
+        """
+        input_path = Path(input_dir)
+        output_path = Path(output_dir)
+        output_path.mkdir(exist_ok=True)
+        
+        # 只掃描壓縮檔案
+        archive_extensions = self.file_settings.get('supported_extensions', {}).get('archives', [])
+        files = []
+        for ext in archive_extensions:
+            files.extend(input_path.glob(f"*{ext}"))
+            files.extend(input_path.glob(f"**/*{ext}"))
+        
+        self.logger.info(f"找到 {len(files)} 個壓縮檔案")
+        
+        results = {
+            'total': len(files),
+            'success': 0,
+            'failed': 0,
+            'skipped': 0,
+            'details': []
+        }
+        
+        if not files:
+            self.logger.warning("沒有找到壓縮檔案")
+            return results
+        
+        # 處理檔案
+        for file_path in tqdm(files, desc="處理壓縮檔案"):
+            try:
+                result = self._process_archive_file(file_path, output_path)
+                results['details'].append(result)
+                
+                if result['status'] == 'success':
+                    results['success'] += 1
+                elif result['status'] == 'skipped':
+                    results['skipped'] += 1
+                else:
+                    results['failed'] += 1
+                    
+            except Exception as e:
+                error_result = {
+                    'file_path': str(file_path),
+                    'file_type': 'archive',
+                    'status': 'failed',
+                    'message': f"處理時發生未預期錯誤: {str(e)}",
+                    'output_path': None
+                }
+                results['details'].append(error_result)
+                results['failed'] += 1
+                self.logger.error(f"處理檔案 {file_path} 時發生錯誤: {e}")
+        
+        return results
+    
+    def process_excel_files(self, input_dir: str, output_dir: str) -> Dict[str, Any]:
+        """
+        只處理 Excel 檔案
+        
+        Args:
+            input_dir: 輸入資料夾路徑
+            output_dir: 輸出資料夾路徑
+            
+        Returns:
+            Dict: 處理結果統計
+        """
+        input_path = Path(input_dir)
+        output_path = Path(output_dir)
+        output_path.mkdir(exist_ok=True)
+        
+        # 只掃描 Excel 檔案
+        excel_extensions = self.file_settings.get('supported_extensions', {}).get('excel', [])
+        files = []
+        for ext in excel_extensions:
+            files.extend(input_path.glob(f"*{ext}"))
+            files.extend(input_path.glob(f"**/*{ext}"))
+        
+        self.logger.info(f"找到 {len(files)} 個 Excel 檔案")
+        
+        results = {
+            'total': len(files),
+            'success': 0,
+            'failed': 0,
+            'skipped': 0,
+            'details': []
+        }
+        
+        if not files:
+            self.logger.warning("沒有找到 Excel 檔案")
+            return results
+        
+        # 處理檔案
+        for file_path in tqdm(files, desc="處理 Excel 檔案"):
+            try:
+                result = self._process_excel_file(file_path, output_path)
+                results['details'].append(result)
+                
+                if result['status'] == 'success':
+                    results['success'] += 1
+                elif result['status'] == 'skipped':
+                    results['skipped'] += 1
+                else:
+                    results['failed'] += 1
+                    
+            except Exception as e:
+                error_result = {
+                    'file_path': str(file_path),
+                    'file_type': 'excel',
+                    'status': 'failed',
+                    'message': f"處理時發生未預期錯誤: {str(e)}",
+                    'output_path': None
+                }
+                results['details'].append(error_result)
+                results['failed'] += 1
+                self.logger.error(f"處理檔案 {file_path} 時發生錯誤: {e}")
+        
+        return results
+    
     def _scan_files(self, input_path: Path) -> List[Path]:
         """掃描需要處理的檔案"""
         supported_extensions = self.file_settings.get('supported_extensions', {})
