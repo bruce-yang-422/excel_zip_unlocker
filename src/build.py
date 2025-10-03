@@ -169,34 +169,30 @@ def copy_additional_files():
             print(f"✓ 已複製檔案: {readme}")
 
 
-def create_batch_files():
-    """建立批次執行檔案"""
+def create_powershell_files():
+    """建立 PowerShell 執行檔案"""
     dist_dir = Path('dist')
     if not dist_dir.exists():
         return
     
-    # 建立命令行版本批次檔
-    cmd_batch = '''@echo off
-echo Excel ZIP Unlocker - 命令行版本
-echo.
-excel_zip_unlocker.exe
-pause
+    # 建立 GUI 版本 PowerShell 腳本
+    gui_ps1 = '''# Excel ZIP Unlocker - GUI 版本
+Write-Host "Excel ZIP Unlocker - GUI 版本" -ForegroundColor Green
+Write-Host "=================================" -ForegroundColor Green
+Write-Host ""
+
+try {
+    .\\excel_zip_unlocker_gui.exe
+} catch {
+    Write-Host "執行 GUI 版本時發生錯誤: $($_.Exception.Message)" -ForegroundColor Red
+    Read-Host "按 Enter 鍵退出"
+}
 '''
     
-    with open(dist_dir / 'run_cmd.bat', 'w', encoding='utf-8') as f:
-        f.write(cmd_batch)
+    with open(dist_dir / 'run_gui.ps1', 'w', encoding='utf-8') as f:
+        f.write(gui_ps1)
     
-    # 建立 GUI 版本批次檔
-    gui_batch = '''@echo off
-echo Excel ZIP Unlocker - GUI 版本
-echo.
-excel_zip_unlocker_gui.exe
-'''
-    
-    with open(dist_dir / 'run_gui.bat', 'w', encoding='utf-8') as f:
-        f.write(gui_batch)
-    
-    print("✓ 已建立批次執行檔案")
+    print("✓ 已建立 PowerShell 執行檔案")
 
 
 def main():
@@ -218,16 +214,15 @@ def main():
     # 複製額外檔案
     copy_additional_files()
     
-    # 建立批次檔案
-    create_batch_files()
+    # 建立 PowerShell 檔案
+    create_powershell_files()
     
     print("\n" + "=" * 40)
     print("打包完成！")
     print("可執行檔案位於 dist/ 目錄中")
     print("- excel_zip_unlocker.exe (命令行版本)")
     print("- excel_zip_unlocker_gui.exe (GUI 版本)")
-    print("- run_cmd.bat (執行命令行版本)")
-    print("- run_gui.bat (執行 GUI 版本)")
+    print("- run_gui.ps1 (執行 GUI 版本)")
 
 
 if __name__ == "__main__":

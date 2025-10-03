@@ -20,7 +20,6 @@ excel_zip_unlocker/
 ├── 📄 main.py                    # 主程式 (命令行版本)
 ├── 🖥️ gui.py                     # GUI 介面
 ├── 📄 run.ps1                    # PowerShell 執行腳本
-├── 📄 run.bat                    # 批次執行腳本
 ├── 📄 setup_git.ps1              # Git 初始化腳本 (PowerShell)
 ├── 📋 requirements.txt           # Python 依賴套件
 ├── 📄 .gitignore                 # Git 忽略規則
@@ -93,10 +92,10 @@ pip install -r requirements.txt
 
 ### 5. 執行程式
 
-#### 使用批次腳本 (推薦)
+#### 使用 PowerShell 腳本 (推薦)
 ```bash
 # 雙擊執行
-run.bat
+run.ps1
 
 # 或使用 PowerShell
 .\run.ps1
@@ -305,8 +304,7 @@ python src/build.py
 打包完成後，可執行檔案會位於 `dist/` 目錄中：
 - `excel_zip_unlocker.exe` - 命令行版本
 - `excel_zip_unlocker_gui.exe` - GUI 版本
-- `run_cmd.bat` - 執行命令行版本
-- `run_gui.bat` - 執行 GUI 版本
+- `run_gui.ps1` - 執行 GUI 版本
 
 ### 手動打包
 

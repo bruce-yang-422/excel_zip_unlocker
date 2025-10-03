@@ -74,13 +74,50 @@ Write-Host "輸出資料夾: $Output" -ForegroundColor Cyan
 Write-Host "設定檔: $Config" -ForegroundColor Cyan
 Write-Host ""
 
-if ($GUI) {
+# 如果沒有指定 GUI 參數，顯示選單
+if (!$GUI) {
+    Write-Host "請選擇執行模式:" -ForegroundColor Yellow
+    Write-Host "1. 命令行版本" -ForegroundColor White
+    Write-Host "2. GUI 版本" -ForegroundColor White
+    Write-Host "3. 檢查依賴套件" -ForegroundColor White
+    Write-Host "4. 退出" -ForegroundColor White
+    Write-Host ""
+    
+    do {
+        $choice = Read-Host "請輸入選項 (1-4)"
+        switch ($choice) {
+            "1" {
+                Write-Host "啟動命令行版本..." -ForegroundColor Yellow
+                python main.py -i $Input -o $Output -c $Config
+                break
+            }
+            "2" {
+                Write-Host "啟動 GUI 版本..." -ForegroundColor Yellow
+                python gui.py
+                break
+            }
+            "3" {
+                Write-Host "檢查依賴套件..." -ForegroundColor Yellow
+                python main.py --check-deps
+                Write-Host ""
+                continue
+            }
+            "4" {
+                Write-Host "退出程式" -ForegroundColor Yellow
+                exit 0
+            }
+            default {
+                Write-Host "無效選項，請重新選擇" -ForegroundColor Red
+                continue
+            }
+        }
+    } while ($choice -notin @("1", "2", "3", "4"))
+} else {
     Write-Host "啟動 GUI 版本..." -ForegroundColor Yellow
     python gui.py
-} else {
-    Write-Host "啟動命令行版本..." -ForegroundColor Yellow
-    python main.py -i $Input -o $Output -c $Config
 }
 
 Write-Host ""
 Write-Host "程式執行完成" -ForegroundColor Green
+Write-Host "按任意鍵退出..." -ForegroundColor Cyan
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
