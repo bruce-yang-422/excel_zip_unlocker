@@ -1,0 +1,56 @@
+Excel ZIP Unlocker 使用說明
+============================
+
+版本: 1.0
+日期: 2025-10-03
+
+## 快速開始
+
+1. 將需要處理的檔案放入 input/ 資料夾
+2. 編輯 config/config.yaml 設定密碼清單
+3. 執行 run.bat 選擇執行模式
+4. 查看 output/ 資料夾中的處理結果
+
+## 支援的檔案類型
+
+Excel 檔案:
+- .xlsx, .xls, .xlsm, .xlsb
+
+壓縮檔案:
+- .zip, .rar
+
+## 設定密碼
+
+在 config/config.yaml 檔案中的 passwords 區段設定密碼:
+
+passwords:
+  - "123456"
+  - "password123"
+  - "your_password"
+
+## 執行方式
+
+1. 批次腳本: 雙擊 run.bat
+2. PowerShell: 執行 .\run.ps1
+3. Python: python main.py (命令行) 或 python gui.py (圖形介面)
+
+## 輸出說明
+
+- output/ - 成功處理的檔案
+- logs/ - 執行日誌
+- report/ - 處理結果報表
+
+## 常見問題
+
+Q: 密碼錯誤怎麼辦？
+A: 檢查 config/config.yaml 中的密碼設定，確認大小寫正確。
+
+Q: RAR 檔案無法解壓？
+A: 確認 tools/unrar.exe 檔案存在。
+
+Q: 如何查看詳細錯誤？
+A: 查看 logs/ 資料夾中的日誌檔案。
+
+## 技術支援
+
+如有問題請查看 README.md 或提交 Issue。

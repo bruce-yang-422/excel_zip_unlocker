@@ -1,0 +1,85 @@
+Excel ZIP Unlocker 專案建立完成
+=====================================
+
+專案概述:
+---------
+Excel ZIP Unlocker 是一個功能完整的批次處理工具，專門用於：
+- 自動解壓縮 ZIP 與 RAR 檔案
+- 自動移除 Excel 檔案的密碼保護
+- 批次處理大量檔案
+- 提供完整的日誌記錄和報表生成
+
+已完成的檔案:
+-------------
+1. 核心程式檔案:
+   - main.py - 命令行主程式
+   - gui.py - 圖形化介面
+   - src/logger_manager.py - 日誌管理系統
+   - src/file_processor.py - 檔案處理核心
+   - src/report_generator.py - 報表生成系統
+
+2. 設定和配置:
+   - config/config.yaml - 主設定檔
+   - requirements.txt - Python 依賴套件
+
+3. 執行腳本:
+   - run.bat - Windows 批次執行腳本
+   - run.ps1 - PowerShell 執行腳本
+   - build.py - PyInstaller 打包腳本
+
+4. 文件:
+   - README.md - 完整使用說明
+   - 使用說明.txt - 簡化使用說明
+   - test_setup.py - 專案測試腳本
+
+5. 資料夾結構:
+   - input/ - 待處理檔案
+   - output/ - 處理結果
+   - logs/ - 執行日誌
+   - report/ - 處理報表
+   - tools/ - 外部工具
+   - src/ - 核心模組
+
+功能特色:
+---------
+✓ 支援 Excel 檔案解密 (.xlsx, .xls, .xlsm, .xlsb)
+✓ 支援 ZIP 和 RAR 檔案解壓縮
+✓ 多組密碼自動嘗試
+✓ 完整的日誌記錄系統
+✓ 詳細的處理結果報表
+✓ 命令行和 GUI 雙重介面
+✓ 自動清理舊日誌檔案
+✓ 支援多種報表格式 (YAML/JSON/CSV)
+✓ 可打包成 Windows EXE 檔案
+
+使用方式:
+---------
+1. 基本使用:
+   - 雙擊 run.bat 選擇執行模式
+   - 或執行 python main.py (命令行)
+   - 或執行 python gui.py (圖形介面)
+
+2. 設定密碼:
+   - 編輯 config/config.yaml
+   - 在 passwords 區段添加密碼清單
+
+3. 處理檔案:
+   - 將檔案放入 input/ 資料夾
+   - 執行程式
+   - 查看 output/ 資料夾中的結果
+
+4. 查看結果:
+   - logs/ - 詳細執行日誌
+   - report/ - 處理結果統計
+
+測試結果:
+---------
+✓ 所有模組匯入正常
+✓ 設定檔載入成功
+✓ 資料夾結構正確
+✓ 主程式模組正常
+✓ 依賴套件已安裝
+
+專案狀態: 完成並可正常使用
+建立日期: 2025-10-03
+版本: 1.0
